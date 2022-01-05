@@ -1,0 +1,82 @@
+.background {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../../assets/image/Netflix-Background-1-1140x600.jpg");
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  height: 100vh;
+}
+
+.logo {
+  position: absolute;
+  top: 2rem;
+  left: 2.5rem;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 45rem;
+  height: 67rem;
+  padding: 6rem;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 0.5rem;
+}
+
+.form-control h1 {
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 4rem;
+}
+
+.input-email,
+.input-password {
+  border: none;
+  background-color: #333;
+  color: #8c8c8c;
+  padding: 2rem;
+  font-size: 1.5rem;
+}
+
+.input-email-wrapper,
+.input-password-wrapper {
+  margin-bottom: 1.8rem;
+  border-radius: 0.5rem;
+}
+
+.form-control input:focus {
+  outline: none;
+  background-color: #444;
+}
+
+.form-control input,
+.form-control button {
+  height: 5rem;
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+.form-control button {
+  border: none;
+  background-color: #e50914;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-top: 2.2rem;
+}
+
+.invalid {
+  border-bottom: 2px solid #e87c03;
+}
+
+.error-text {
+  color: #e87c03;
+  margin-top: 1rem;
+  font-size: 1.25rem;
+}
