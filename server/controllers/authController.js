@@ -1,16 +1,78 @@
 import { user } from "../models/User.js";
-import bcrypt from "bcrypt";
+import {
+  createRefreshToken,
+  createAccessToken,
+  verifyToken,
+} from "../utils/jwt.js";
+import { refresh } from "../models/RefreshToken.js";
 
 export const register = async (req, res) => {
   const { email, password } = req.body;
-  const salt = bcrypt.genSalt();
-  const encryptedPassword = bcrypt.hash(password, salt);
-  const newUser = await user.create({ email, password: encryptedPassword });
+  const newUser = await user.create({ email, password });
   res.json({ msg: "registeration completed", newUser });
 };
-export const login = (req, res) => {
-  res.send("login");
+
+export const login = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res
+      .status(400)
+      .json({ msg: "You can't pass empty value among both inputs" });
+  }
+  const potentialUser = await user.findOne({ email });
+  if (!potentialUser) {
+    return res
+      .status(404)
+      .json({ msg: "There is no user with email : " + email });
+  }
+
+  const isPasswordMatch = potentialUser.comparePassword(password);
+  if (isPasswordMatch === false) {
+    res.status(401).json({ msg: "password incorrect" });
+  }
+
+  const accessToken = createAccessToken(email, potentialUser._id);
+  let refreshToken = createRefreshToken();
+  const existedRefreshToken = await refresh.findOne({
+    user: potentialUser._id,
+  });
+  if (existedRefreshToken) {
+    try {
+      verifyToken(existedRefreshToken.token);
+      refreshToken = existedRefreshToken.token;
+    } catch (error) {
+      await refresh.deleteOne({ user: potentialUser._id });
+      await refresh.create({
+        token: refreshToken,
+        user: potentialUser._id,
+      });
+    }
+  } else {
+    await refresh.create({
+      token: refreshToken,
+      user: potentialUser._id,
+    });
+  }
+
+  res.cookie("accessToken", accessToken, { httpOnly: true });
+  res.cookie("refreshToken", refreshToken, { httpOnly: true });
+  res.cookie("userIdentifier", potentialUser._id, { httpOnly: true });
+
+  res.status(202).json({ msg: "login success", user: potentialUser });
 };
+
 export const logout = (req, res) => {
-  res.send("logout");
+  res.cookie("accessToken", "logout", {
+    expires: new Date(Date.now() + 0),
+    httpOnly: true,
+  });
+  res.cookie("refreshToken", "logout", {
+    expires: new Date(Date.now() + 0),
+    httpOnly: true,
+  });
+  res.cookie("userIdentifier", "logout", {
+    expires: new Date(Date.now() + 0),
+    httpOnly: true,
+  });
+  res.status(200).json({ msg: "logged out" });
 };
