@@ -26,8 +26,8 @@ export const login = async (req, res) => {
       .json({ msg: "There is no user with email : " + email });
   }
 
-  const isPasswordMatch = potentialUser.comparePassword(password);
-  if (isPasswordMatch === false) {
+  const isPasswordMatch = await potentialUser.comparePassword(password);
+  if (!isPasswordMatch) {
     res.status(401).json({ msg: "password incorrect" });
   }
 
@@ -58,7 +58,7 @@ export const login = async (req, res) => {
   res.cookie("refreshToken", refreshToken, { httpOnly: true });
   res.cookie("userIdentifier", potentialUser._id, { httpOnly: true });
 
-  res.status(202).json({ msg: "login success", user: potentialUser });
+  res.status(202).json({ msg: "login success" });
 };
 
 export const logout = (req, res) => {
