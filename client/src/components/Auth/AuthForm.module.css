@@ -1,0 +1,11 @@
+.form-control button {
+  height: 5rem;
+  width: 100%;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 2.2rem 0;
+  background-color: #e50914;
+  color: #fff;
+  border-radius: 0.5rem;
+  border: none;
+}

@@ -6,16 +6,16 @@ import {
 import { refresh } from "../models/RefreshToken";
 import { user } from "../models/User";
 
-export const checkToken = async (req, res, next) => {
+export const checkToken = async (req, res) => {
   const userIdentifier = req.cookies.userIdentifier;
   if (!userIdentifier) {
-    return res.status(400).json({ msg: "you can't use this route" });
+    return res.status(401).json({ msg: "you can't use this route" });
   }
   const currentUser = await user.findById(userIdentifier);
-  const refreshTokenWithUSer = await refresh.findOne({ user: userIdentifier });
+  const refreshTokenWithUser = await refresh.findOne({ user: userIdentifier });
   let refreshToken, accessToken, isRefreshValid, isAccessValid;
   try {
-    refreshToken = verifyToken(refreshTokenWithUSer.token);
+    refreshToken = verifyToken(refreshTokenWithUser.token);
   } catch (err) {
     isRefreshValid = false;
   }
@@ -27,7 +27,9 @@ export const checkToken = async (req, res, next) => {
 
   if (isAccessValid === false) {
     if (isRefreshValid === false) {
-      res.status(401).json({ msg: "You are not allowed to use service" });
+      return res
+        .status(401)
+        .json({ msg: "You are not allowed to use service" });
     } else {
       const newAccessToken = createAccessToken(
         currentUser.email,
@@ -35,10 +37,10 @@ export const checkToken = async (req, res, next) => {
       );
       res.cookie("accessToken", newAccessToken);
       req.cookies.accessToken = newAccessToken;
-      next();
+      return res.status(202).json({ msg: "accessToken created, accepted" });
     }
   } else {
-    if (!refreshToken) {
+    if (isRefreshValid === false) {
       const newRefreshToken = createRefreshToken();
       await refresh.create({
         refreshToken: newRefreshToken,
@@ -46,9 +48,9 @@ export const checkToken = async (req, res, next) => {
       });
       res.cookie("refreshToken", newRefreshToken);
       req.cookies.refreshToken = newRefreshToken;
-      next();
+      return res.status(202).json({ msg: "refreshToken created, accepted" });
     } else {
-      next();
+      return res.status(202).json({ msg: "accepted" });
     }
   }
 };

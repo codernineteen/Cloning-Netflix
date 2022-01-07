@@ -13,17 +13,28 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
+//다른 도메인간 쿠키 전송을 위한 세팅
+app.all("/*", function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
 //middleware
 app.use(express.json());
-app.use(cors());
+//다른 도메인간 쿠키 전송을 위한 세팅
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 app.use(cookieParser(process.env.JWT_SECRET));
-app.use("/auth", authRouter);
-app.use("/", videoRouter);
 
-//routes
-// app.get("/browse", checkToken, (req, res) => {
-//   res.json({ msg: "Accepted, this is index page" });
-// });
+app.use("/auth", authRouter);
+// app.use(checkToken);
+app.use("/", videoRouter);
+app.get("/token", checkToken);
 
 const start = async () => {
   try {

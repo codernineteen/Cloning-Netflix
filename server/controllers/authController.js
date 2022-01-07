@@ -8,8 +8,15 @@ import { refresh } from "../models/RefreshToken.js";
 
 export const register = async (req, res) => {
   const { email, password } = req.body;
-  const newUser = await user.create({ email, password });
-  res.json({ msg: "registeration completed", newUser });
+  if (!email || !password) {
+    return res.status(400).json({ msg: "registration denied" });
+  }
+  const isExisted = await user.findOne({ email });
+  if (isExisted) {
+    return res.status(409).json({ msg: "email already existed" });
+  }
+  await user.create({ email, password });
+  res.json({ msg: "registeration success" });
 };
 
 export const login = async (req, res) => {
@@ -54,8 +61,14 @@ export const login = async (req, res) => {
     });
   }
 
-  res.cookie("accessToken", accessToken, { httpOnly: true });
-  res.cookie("refreshToken", refreshToken, { httpOnly: true });
+  res.cookie("accessToken", accessToken, {
+    maxAge: 1000 * 60 * 60 * 2,
+    httpOnly: true,
+  });
+  res.cookie("refreshToken", refreshToken, {
+    maxAge: 1000 * 60 * 60 * 24 * 2,
+    httpOnly: true,
+  });
   res.cookie("userIdentifier", potentialUser._id, { httpOnly: true });
 
   res.status(202).json({ msg: "login success" });

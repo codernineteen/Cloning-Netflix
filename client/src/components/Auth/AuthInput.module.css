@@ -1,0 +1,58 @@
+.input-email-wrapper,
+.input-password-wrapper {
+  margin-bottom: 1.8rem;
+  border-radius: 0.5rem;
+  position: relative;
+  transition: label 0.3s ease-out;
+}
+
+.input-email,
+.input-password {
+  padding: 1rem 0 0 2rem;
+  height: 5rem;
+  width: 100%;
+  border: none;
+  background-color: #333;
+  color: #fff;
+  font-size: 1.7rem;
+  border-radius: 0.5rem;
+}
+
+.input-email:focus,
+.input-password:focus {
+  outline: none;
+  background-color: #444;
+}
+
+.input-email-wrapper label,
+.input-password-wrapper label {
+  display: flex;
+  position: absolute;
+  font-size: 1.5rem;
+  color: #8c8c8c;
+  transform: translate(2rem, -3.5rem) scale(1);
+}
+
+.error-text {
+  color: #e87c03;
+  margin-top: 1rem;
+  font-size: 1.25rem;
+}
+
+.input-email-wrapper .active-label-email {
+  transform: translate(-1rem, -5rem) scale(0.7);
+}
+
+.input-password-wrapper .active-label-password {
+  transform: translate(1rem, -5rem) scale(0.7);
+}
+
+.invalid {
+  border-bottom: 2px solid #e87c03;
+}
+
+.error-text {
+  color: #e87c03;
+  margin-top: 1rem;
+  font-size: 1.25rem;
+}
