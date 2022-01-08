@@ -1,0 +1,55 @@
+.header {
+  display: flex;
+  width: 100%;
+  color: #fff;
+  position: fixed;
+  height: 6.5rem;
+  background: linear-gradient(rgb(0, 0, 0, 0.5) 20%, rgba(0, 0, 0, 0));
+  justify-content: space-around;
+  transition: background 0.5s;
+  z-index: 100;
+}
+
+.logo {
+  height: 100%;
+  padding: 1.7rem 0 0 4rem;
+  margin-right: 2rem;
+}
+
+.logo img {
+  width: 10rem;
+  height: 4rem;
+}
+
+.nav {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  width: 20%;
+}
+
+.list-menu {
+  display: flex;
+  width: 100%;
+}
+
+.list-item {
+  list-style: none;
+  flex: 1;
+}
+
+.list-item:last-child {
+  flex: 2;
+}
+
+.profile {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 3rem;
+  flex: 1;
+}
+
+.noGradient {
+  background: #000;
+}

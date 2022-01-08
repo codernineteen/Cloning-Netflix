@@ -77,7 +77,7 @@ const Login = () => {
             registerSuccess.msg === "email existed" && (
               <div className={classes["error-box"]}>
                 이미 존재하는 계정입니다.{" "}
-                <Link to="/Login">해당 계정에 로그인</Link>하거나 다른 이메일을
+                <Link to="/login">해당 계정에 로그인</Link>하거나 다른 이메일을
                 사용하세요.
               </div>
             )}
@@ -108,8 +108,7 @@ const Login = () => {
             linkText=""
           />
           <p className={classes.register}>
-            이미 Comflix의 회원 이신가요? <Link to="/register">로그인하기</Link>
-            .
+            이미 Comflix의 회원 이신가요? <Link to="/login">로그인하기</Link>.
           </p>
           <p className={classes.captcha}>
             이 페이지는 Google reCAPTCHA의 보호를 받아 사용자가 로봇이 아님을

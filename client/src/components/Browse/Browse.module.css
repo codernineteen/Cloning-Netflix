@@ -1,3 +1,114 @@
-.play {
-  background-color: #333;
+.content {
+  position: relative;
+  color: #fff;
+  width: 100vw;
+  height: 100%;
+}
+
+.content::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  width: 100vw;
+  height: 100%;
+  background-color: #000;
+  z-index: -10;
+}
+
+.wrapper-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: -5;
+}
+
+.wrapper-video::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-image: linear-gradient(rgba(0, 0, 0, 0) 90%, rgba(0, 0, 0, 1));
+}
+
+.main-video {
+  width: 100%;
+}
+
+.billboard-row {
+  display: flex;
+  align-items: flex-end;
+  height: 80rem;
+  padding: 0 0 8rem 4rem;
+}
+
+.billboard-title {
+  margin-bottom: 1rem;
+}
+
+.billboard-description {
+  font-size: 1.3rem;
+}
+
+.billboard-play {
+  width: 9rem;
+  height: 3.2rem;
+  border: none;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  margin: 1.5rem 1rem 0 0;
+}
+
+.billboard-play:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.billboard-detail {
+  width: 12rem;
+  height: 3.2rem;
+  border-radius: 0.5rem;
+  background-color: rgba(121, 121, 121, 0.8);
+  border: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+.billboard-detail:hover {
+  background-color: rgba(121, 121, 121, 0.5);
+}
+
+.billboard-play-wrapper,
+.billboard-detail-wrapper {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 1rem;
+}
+
+.billboard-replay-wrapper {
+  flex: 1;
+}
+
+.billboard-replay {
+  position: absolute;
+  right: 2rem;
+  bottom: 4.5rem;
+  background-color: transparent;
+  border: 1px solid #fff;
+  width: 4rem;
+  height: 4rem;
+  padding: 1rem;
+  border-radius: 10rem;
+}
+
+@media (min-width: 841px) and (max-width: 1280px) {
+  .billboard-row {
+    height: 45rem;
+  }
+  .billboard-description {
+    width: 32.5rem;
+  }
 }
