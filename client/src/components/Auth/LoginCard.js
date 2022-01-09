@@ -89,7 +89,8 @@ const Login = () => {
             onEmailClick={emailClicked}
             isEmailStaying={emailStaying}
             invalidEmail={invalidEmail}
-            emailErrorText="정확한 이메일 주소나 전화번호를 입력하세요."
+            emailFormatErrorText="정확한 이메일 주소나 전화번호를 입력하세요."
+            emailShortErrorText="이메일은 최소 5자리 이상입니다."
             pwdValue={passwordValue}
             onPwdChange={passwordInputHandler}
             onPwdBlur={passwordBlurHandler}

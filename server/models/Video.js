@@ -6,15 +6,12 @@ const EpisodeSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
   },
   runningTime: {
     type: String,
-    required: true,
   },
-  season: {
-    type: Number,
-    default: 1,
+  episodeThumb: {
+    type: String,
   },
 });
 
@@ -31,7 +28,13 @@ const VideoSchema = new mongoose.Schema({
     type: Array,
   },
   episode: [EpisodeSchema],
-  src: {
+  previewThumbSrc: {
+    type: String,
+  },
+  overviewThumbSrc: {
+    type: String,
+  },
+  videoSrc: {
     type: String,
   },
   myList: {
@@ -41,6 +44,18 @@ const VideoSchema = new mongoose.Schema({
   numOfView: {
     type: Number,
     default: 0,
+  },
+  season: {
+    type: Number,
+    default: 1,
+  },
+  rating: {
+    type: Number,
+    default: 1,
+  },
+  description: {
+    type: String,
+    required: true,
   },
 });
 
