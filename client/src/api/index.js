@@ -66,3 +66,12 @@ export const checkUserAuthenticated = async () => {
     }
   }
 };
+
+export const getAllVideos = async () => {
+  try {
+    const response = await axios.get("http://localhost:5000/browse");
+    return response.data.videos;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -1,17 +1,34 @@
-.content {
+.billboard-content {
   position: relative;
   color: #fff;
-  width: 100vw;
+  width: 100%;
   height: 100%;
 }
 
-.content::before {
+.billboard-content::before {
   position: absolute;
   top: 0;
   left: 0;
   content: "";
   width: 100vw;
   height: 100%;
-  background-color: #000;
+  background-color: #141414;
+  z-index: -10;
+}
+
+.video-content {
+  height: 100%;
+  position: relative;
+  color: #fff;
+}
+
+.video-content::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  width: 100vw;
+  height: 100%;
+  background-color: #141414;
   z-index: -10;
 }

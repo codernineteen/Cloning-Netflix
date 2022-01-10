@@ -15,31 +15,29 @@ const Video = (props) => {
   };
 
   return (
-    <div
-      className={classes["video-items"]}
-      onMouseOver={mouseOverHandler}
-      onMouseOut={mouseOutHandler}
-    >
-      {!isMouseOver && props.image}
-      <div className={classes["video-item-wrapper"]}>
-        <video loop={false} poster={props.poster}>
-          <source src={props.videoSrc} type="video/mp4" />
-        </video>
-        <div className={classes["video-item-buttons"]}>
-          <button>play</button>
-          <button>mylist</button>
-          <button>detail</button>
+    <div onMouseOver={mouseOverHandler} onMouseOut={mouseOutHandler}>
+      <img src={props.image} alt="each thumbnail of videos" />
+      {isMouseOver && (
+        <div className={classes["video-item-over"]}>
+          <video loop={false} poster={props.poster}>
+            <source src={props.videoSrc} type="video/mp4" />
+          </video>
+          <div className={classes["video-item-buttons"]}>
+            <button>play</button>
+            <button>mylist</button>
+            <button>detail</button>
+          </div>
+          <p className={classes["video-item-info"]}>
+            <span>rating</span>
+            season
+          </p>
+          <p className={classes["video-item-features"]}>
+            <span>feature1</span>
+            <span>feature1</span>
+            <span>feature1</span>
+          </p>
         </div>
-        <p className={classes["video-item-info"]}>
-          <span>rating</span>
-          season
-        </p>
-        <p className={classes["video-item-features"]}>
-          <span>feature1</span>
-          <span>feature1</span>
-          <span>feature1</span>
-        </p>
-      </div>
+      )}
     </div>
   );
 };

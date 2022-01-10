@@ -14,33 +14,13 @@ export const checkToken = async (req, res) => {
   const currentUser = await user.findById(userIdentifier);
   const refreshTokenWithUser = await refresh.findOne({ user: userIdentifier });
   let refreshToken, accessToken, isRefreshValid, isAccessValid;
-  try {
-    refreshToken = verifyToken(refreshTokenWithUser.token);
-  } catch (err) {
-    isRefreshValid = false;
-  }
-  try {
-    accessToken = verifyToken(req.cookies.accessToken);
-  } catch (err) {
-    isAccessValid = false;
-  }
 
-  if (isAccessValid === false) {
-    if (isRefreshValid === false) {
-      return res
-        .status(401)
-        .json({ msg: "You are not allowed to use service" });
-    } else {
-      const newAccessToken = createAccessToken(
-        currentUser.email,
-        userIdentifier
-      );
-      res.cookie("accessToken", newAccessToken);
-      req.cookies.accessToken = newAccessToken;
-      return res.status(202).json({ msg: "accessToken created, accepted" });
-    }
-  } else {
-    if (isRefreshValid === false) {
+  try {
+    verifyToken(req.cookies.accessToken);
+    try {
+      verifyToken(refreshTokenWithUser.token);
+      return res.status(202).json({ msg: "accepted" });
+    } catch (error) {
       const newRefreshToken = createRefreshToken();
       await refresh.create({
         refreshToken: newRefreshToken,
@@ -49,8 +29,21 @@ export const checkToken = async (req, res) => {
       res.cookie("refreshToken", newRefreshToken);
       req.cookies.refreshToken = newRefreshToken;
       return res.status(202).json({ msg: "refreshToken created, accepted" });
-    } else {
-      return res.status(202).json({ msg: "accepted" });
+    }
+  } catch (error) {
+    try {
+      verifyToken(refreshTokenWithUser.token);
+      const newAccessToken = createAccessToken(
+        currentUser.email,
+        userIdentifier
+      );
+      res.cookie("accessToken", newAccessToken);
+      req.cookies.accessToken = newAccessToken;
+      return res.status(202).json({ msg: "accessToken created, accepted" });
+    } catch (error) {
+      return res
+        .status(401)
+        .json({ msg: "You are not allowed to use service" });
     }
   }
 };
